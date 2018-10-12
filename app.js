@@ -37,6 +37,14 @@ app.post('/', async (req, res) => {
       'paypal-transmission-sig': req.header('paypal-transmission-sig'),
       'paypal-transmission-time': req.header('paypal-transmission-time'),
     };
+    paypal.notification.webhookEvent.getAndVerify(req.body, (error, response) => {
+      if (error) {
+        console.log('error: ' + error);
+      } else {
+        console.log('response: ' + response);
+      }
+    });
+    /*
     paypal.notification.webhookEvent.verify(
       headers,
       JSON.stringify(req.body),
@@ -54,6 +62,7 @@ app.post('/', async (req, res) => {
           }
         }
       });
+      */
     console.log('200');
     res.sendStatus(200);
   } catch (e) {
