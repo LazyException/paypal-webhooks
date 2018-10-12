@@ -90,6 +90,7 @@ app.post('/ipn', async (req, res) => {
         if (req.body.payment_status === COMPLETED) {
           // 已确认付款完成
           console.log(`${prefix} COMPLETED`);
+          res.sendStatus(200);
         }
       }
     });
