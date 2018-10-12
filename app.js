@@ -76,6 +76,7 @@ app.post('/', async (req, res) => {
 // ipn
 app.post('/ipn', async (req, res) => {
   const prefix = 'IPN ';
+  const COMPLETED = 'Completed';
   try {
     console.log(`${prefix} body`);
     console.log(req.body);
