@@ -77,11 +77,13 @@ app.post('/', async (req, res) => {
 app.post('/ipn', async (req, res) => {
   const prefix = 'IPN ';
   try {
-    console.log(`${prefix} body ${req.body}`);
+    console.log(`${prefix} body`);
+    console.log(req.body);
     ipn.verify(req.body, {allow_sandbox: process.env.PAYPAL_CLIENT_MODE === 'sandbox'}, (err, mes) => {
       console.log(`${prefix} mes ${mes}`);
       if (err) {
-        console.log(`${prefix} err ${err}`);
+        console.log(`${prefix} err`);
+        console.log(err);
       } else {
         // TODO：检查支付状态
         if (req.body.payment_status === COMPLETED) {
