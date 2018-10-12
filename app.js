@@ -5,6 +5,8 @@ const paypal = require('paypal-rest-sdk');
 // load .env
 require('dotenv').config();
 
+console.log(process.env);
+
 // express app
 const app = express();
 const PORT = process.env.PORT || 3090;
@@ -34,8 +36,7 @@ app.post('/', async (req, res) => {
       process.env.PAYPAL_WEBHOOK_ID,
       (error, response) => {
         if (error) {
-          console.error(error);
-          throw error;
+          console.log(error);
         } else {
           console.log(response);
           // Verification status must be SUCCESS
@@ -46,9 +47,10 @@ app.post('/', async (req, res) => {
           }
         }
       });
+    console.log('200');
     res.sendStatus(200);
   } catch (e) {
-    console.error(e.message);
+    console.log('500: ' + e.message);
     res.sendStatus(500);
   }
 });
