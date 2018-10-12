@@ -37,7 +37,7 @@ app.post('/', async (req, res) => {
       'paypal-transmission-sig': req.header('paypal-transmission-sig'),
       'paypal-transmission-time': req.header('paypal-transmission-time'),
     };
-    paypal.notification.webhookEvent.getAndVerify(req.body, (error, response) => {
+    paypal.notification.webhookEvent.getAndVerify(JSON.stringify(req.body), (error, response) => {
       if (error) {
         console.log('error: ' + error);
       } else {
