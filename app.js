@@ -39,7 +39,7 @@ app.post('/', async (req, res) => {
     };
     paypal.notification.webhookEvent.verify(
       headers,
-      req.body,
+      JSON.stringify(req.body),
       process.env.PAYPAL_WEBHOOK_ID,
       (error, response) => {
         if (error) {
