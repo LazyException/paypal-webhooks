@@ -46,10 +46,11 @@ app.post('/', async (req, res) => {
           }
         }
       });
+    res.sendStatus(200);
   } catch (e) {
     console.error(e.message);
+    res.sendStatus(500);
   }
-  res.send(200);
 });
 
 // http server
