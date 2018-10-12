@@ -75,6 +75,8 @@ app.post('/', async (req, res) => {
 
 // ipn
 app.post('/ipn', async (req, res) => {
+  // 要先返回空的 200
+  res.sendStatus(200);
   const prefix = 'IPN ';
   const COMPLETED = 'Completed';
   try {
@@ -90,13 +92,11 @@ app.post('/ipn', async (req, res) => {
         if (req.body.payment_status === COMPLETED) {
           // 已确认付款完成
           console.log(`${prefix} COMPLETED`);
-          res.sendStatus(200);
         }
       }
     });
   } catch (e) {
     console.log(`${prefix} exception ${e.message}`);
-    res.sendStatus(500);
   }
 });
 
