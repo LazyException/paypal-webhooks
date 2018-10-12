@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const paypal = require('paypal-rest-sdk');
+const ipn = require('paypal-ipn');
 
 // load .env
 require('dotenv').config();
@@ -68,6 +69,29 @@ app.post('/', async (req, res) => {
     res.sendStatus(200);
   } catch (e) {
     console.log('500: ' + e.message);
+    res.sendStatus(500);
+  }
+});
+
+// ipn
+app.post('/ipn', async (req, res) => {
+  const prefix = 'IPN ';
+  try {
+    console.log(`${prefix} body ${req.body}`);
+    ipn.verify(req.body, {allow_sandbox: process.env.PAYPAL_CLIENT_MODE === 'sandbox'}, (err, mes) => {
+      console.log(`${prefix} mes ${mes}`);
+      if (err) {
+        console.log(`${prefix} err ${err}`);
+      } else {
+        // TODO：检查支付状态
+        if (req.body.payment_status === COMPLETED) {
+          // 已确认付款完成
+          console.log(`${prefix} COMPLETED`);
+        }
+      }
+    });
+  } catch (e) {
+    console.log(`${prefix} exception ${e.message}`);
     res.sendStatus(500);
   }
 });
