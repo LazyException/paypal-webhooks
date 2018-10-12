@@ -30,8 +30,15 @@ app.post('/', async (req, res) => {
       client_id: process.env.PAYPAL_CLIENT_ID,
       client_secret: process.env.PAYPAL_CLIENT_SECRET,
     });
+    const headers = {
+      'paypal-auth-algo': req.header('paypal-auth-algo'),
+      'paypal-cert-url': req.header('paypal-cert-url'),
+      'paypal-transmission-id': req.header('paypal-transmission-id'),
+      'paypal-transmission-sig': req.header('paypal-transmission-sig'),
+      'paypal-transmission-time': req.header('paypal-transmission-time'),
+    };
     paypal.notification.webhookEvent.verify(
-      req.headers,
+      headers,
       req.body,
       process.env.PAYPAL_WEBHOOK_ID,
       (error, response) => {
